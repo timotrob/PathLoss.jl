@@ -21,5 +21,8 @@ EricssonModel,
 # functions
 distanceInKm,
 pathloss,
-azimuthLineAtoB
+azimuthLineAtoB,
+#enums
+CityKind,
+AreaKind
 end # module

@@ -18,9 +18,8 @@ end
 
 @doc "Calculate the path loss with the Okumura-Hata Model"
 function pathloss(model::OkumuraHataModel,dist::AbstractFloat,checkFreqRange=false)
-
     # frequency
-  f::Float64  = model.freq;
+   f::Float64  = model.freq;
    # Checking the frequency range
    if (checkFreqRange)
      if (f < 500 || f > 1500)
@@ -49,11 +48,9 @@ function pathloss(model::OkumuraHataModel,dist::AbstractFloat,checkFreqRange=fal
          # Path loos for urban area
            lossUrban::Float64 = 69.55 + (26.16)*log10(f)-13.82*log10(Hb) - a + (44.9-6.55*log10(Hb))*log10(dist);
           if (areaKind== AreaKind.Open)
-
             lossOpen::Float64 = lossUrban - 4.78 *((log10(f))^2)+18.33*log10(f)-40.94;
             return lossOpen;
-
-          elseif areaKind== Area.suburban
+          elseif (areaKind==AreaKind.SubUrban)
               #Loss for open are
               lossSubUrban::Float64 =  lossUrban  - 2*(log10(f/28.0))^2 - 5.4# //#Loss for suburban area
               return lossSubUrban;

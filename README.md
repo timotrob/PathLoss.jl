@@ -75,3 +75,32 @@ fs.freq = 800 #Mhz
 p_fs1 = pathloss(fs,dist)
 
 ```
+
+### Okumura-Hata Model
+
+```julia
+
+using PathLoss
+
+# point A
+latA = 38.893
+lonA = -77.037852
+# point B
+latB = 38.899147
+lonB = -77.023934
+
+# Calculating distance
+dist = distanceInKm(latA,lonA,latB,lonB)
+
+# Model Setup
+m = OkumuraHataModel()      # For ERP
+m.freq = 800                 # frequency in Mhz
+m.hb = 90                    # Height of the cell site
+m.hm = 1.2                   # Height of MS(Mobile Station)
+m.areaKind = AreaKind.Urban  # Area Type (Urban SubUrban Open)
+m.cityKind = CityKind.Medium # City type (Small Medium Large)
+
+# Calculating PathLoss
+pl = pathloss(m,dist)
+
+```
