@@ -7,7 +7,7 @@ type Ecc33Model<:Model
   freq::Float64
   txH::Float64
   rxH::Float64
-  Ecc33Model() = new (800,50,1.5)
+  Ecc33Model() = new(800,50,1.5)
 end
 
 @doc "Calculate Path loss for distance d (km) with ECC 33- Hata Extend "
