@@ -6,14 +6,16 @@
 [![Coverage Status](https://coveralls.io/repos/github/timotrob/PathLoss.jl/badge.svg?branch=master)](https://coveralls.io/github/timotrob/PathLoss.jl?branch=master)
 
 A Julia package for evaluating Radio Frequency Propagation models.
-The Package can be used in the follows Julia's versions : 0.4 and 0.5.
+
 This package also provides Geo functions to compute distances and azimuths.
 
 ## Installation
 
-The package is installed by calling:
+The package is installed by calling in the Julia's REPL:
 
 Pkg.clone("https://github.com/timotrob/PathLoss.jl.git")
+
+Julia's versions : 0.4 and 0.5.
 
 ## Supported Models
 
