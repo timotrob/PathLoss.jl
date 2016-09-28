@@ -3,6 +3,7 @@
 
 
 [![Build Status](https://travis-ci.org/timotrob/PathLoss.jl.svg?branch=master)](https://travis-ci.org/timotrob/PathLoss.jl)
+[![Coverage Status](https://coveralls.io/repos/github/timotrob/PathLoss.jl/badge.svg?branch=master)](https://coveralls.io/github/timotrob/PathLoss.jl?branch=master)
 
 A Julia package for evaluating Radio Frequency Propagation models.
 
