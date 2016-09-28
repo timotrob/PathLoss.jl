@@ -7,17 +7,17 @@
  #  hb: base station's height;
  #  hm: mobile's height;
 """
-type OkumuraHataModel
+type OkumuraHataModel<:Model
   freq::Float64
-  hb::Float64
-  hm::Float64
+  txH::Float64
+  rxH::Float64
   cityKind::Int
   areaKind::Int
   OkumuraHataModel() = new(800,50,1.5,CityKind.Medium,AreaKind.Urban)
 end
 
 @doc "Calculate the path loss with the Okumura-Hata Model"
-function pathloss(model::OkumuraHataModel,dist::AbstractFloat,checkFreqRange=false)
+function pathloss_op(model::OkumuraHataModel,dist::AbstractFloat,checkFreqRange=true)
     # frequency
    f::Float64  = model.freq;
    # Checking the frequency range
@@ -27,8 +27,8 @@ function pathloss(model::OkumuraHataModel,dist::AbstractFloat,checkFreqRange=fal
      end
    end
    #Bts and MS Heights
-   Hm::Float64 = model.hm
-   Hb::Float64 = model.hm
+   Hm::Float64 = model.rxH
+   Hb::Float64 = model.txH
 
    cityKind::Int = model.cityKind
    areaKind::Int = model.areaKind

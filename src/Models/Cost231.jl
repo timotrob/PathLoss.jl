@@ -9,28 +9,39 @@
  areaKind: area type (1-rural, 2-suburban e 3-urban).
  cityKind : cyte type(1-small, 2-medium e 3-large).
 """
-type Cost321Model
+type Cost231Model<:Model
   freq::Float64
-  hb::Float64
-  hm::Float64
+  txH::Float64
+  rxH::Float64
   ws::Float64
   bs::Float64
   hr::Float64
   cityKind::Int
-  Cost321Model() = new(800,50.0,1.5,20,10,35,CityKind.Medium)
+  Cost231Model() = new(800,50.0,1.5,20,10,35,CityKind.Medium)
 end
 
 "Calculate Path loss for distance dist (km) with COST 231 Model"
-function pathloss(model::Cost321Model, dist::Float64)
-  hm::Float64 = model.hm
-  hb::Float64 = model.hb
+function pathloss_op(model::Cost231Model, dist::AbstractFloat,checkFreqRange=true)
+  #150 a 2000 MHz
+  hm::Float64 = model.rxH
+  hb::Float64 = model.txH
   hr::Float64 = model.hr
   d::Float64 = dist
-  deltaH= hm/hb #relaction between heighths
-  Lbsh = 18*log(1+deltaH) # Loss due to difference of heights
-  Ka=54  #Coefficient of proximity Buildings
-  Kd=18  #Coeficiente of proximidade Edifica??es
-  Kf=4  #Coeficient of environment(urban or not)
+  f::Float64 = model.freq
+  ws::Float64 = model.ws
+  bs::Float64 = model.bs
+  # Checking the frequency range
+  if (checkFreqRange)
+    if (f < 150 || f > 2000)
+     error("The frequency range for Ecc-33 Model is 150MHz-2000Mhz")
+    end
+  end
+
+  deltaH::Float64 = hm/hb #relaction between heighths
+  Lbsh::Float64 = 18*log(1+deltaH) # Loss due to difference of heights
+  Ka::Float64=54.0  #Coefficient of proximity Buildings
+  Kd::Float64=18.0  #Coeficiente of proximidade Edifica??es
+  Kf::Float64=4.0  #Coeficient of environment(urban or not)
 
   #Coeficient's calculate
   if (hr > hb)

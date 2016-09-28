@@ -6,20 +6,20 @@ cityKind : cyte type(1-small, 2-medium e 3-large).
 hb: base station's height
 hm: mobile's height
 """
-type EricssonModel
+type EricssonModel<:Model
   freq::Float64
-  hb::Float64
-  hm::Float64
+  txH::Float64
+  rxH::Float64
   cityKind::Int
   EricssonModel() = new(800,50,1.5,CityKind.Medium)
 end
 @doc "Calculate Path loss for distance dist(km) with the Ericsson Model"
-function pathloss(model::EricssonModel,dist::Float64,checkFreqRange=false)
+function pathloss_op(model::EricssonModel,dist::AbstractFloat,checkFreqRange=true)
     # frequency
   f::Float64  = model.freq;
   #Bts and MS Heights
-  hm::Float64 = model.hm
-  hb::Float64 = model.hb
+  hm::Float64 = model.rxH
+  hb::Float64 = model.txH
    # Checking the frequency range
    if (checkFreqRange)
      if (f < 100 || f > 2000)

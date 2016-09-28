@@ -1,9 +1,9 @@
 
-
 @doc "Calculate the distance between point A (latA,lonA) and Point B(latB,lonB)"
 function distanceInKm(latA::AbstractFloat,lonA::AbstractFloat,latB::AbstractFloat,lonB::AbstractFloat)
   return 2 * 6372.8 * asin(sqrt(sind((latB-latA)/2)^2 + cosd(latA) * cosd(latB) * sind((lonB - lonA)/2)^2))
 end
+
 
 @doc "Calculate the distance between point A(latA,lonA) and a vector of Points(latB,lonB)"
 function distanceInKm(latA::AbstractFloat,lonA::AbstractFloat,latB::Vector{AbstractFloat},lonB::Vector{AbstractFloat})
