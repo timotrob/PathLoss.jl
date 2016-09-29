@@ -7,16 +7,17 @@ type Ecc33Model<:Model
   freq::Float64
   txH::Float64
   rxH::Float64
-  Ecc33Model() = new(800,50,1.5)
+  checkFreqRange::Bool
+  Ecc33Model() = new(800,50,1.5,true)
 end
 
 @doc "Calculate Path loss for distance d (km) with ECC 33- Hata Extend "
-function pathloss_op(model::Ecc33Model, d::AbstractFloat,checkFreqRange=true)
+function pathloss_op(model::Ecc33Model, d::AbstractFloat)
   #e 900 a 1900 MHz
   f = model.freq
 
   # Checking the frequency range
-  if (checkFreqRange)
+  if (model.checkFreqRange)
     if (f < 900 || f > 1900)
      error("The frequency range for Ecc-33 Model is 900MHz-1900Mhz")
     end

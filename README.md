@@ -26,7 +26,8 @@ Julia's versions : 0.4 and 0.5.
 - Ericsson 9999
 - SUI (STANFORD UNIVERSITY INTERIM)
 
-## Exemples
+## Geo Functions
+-----------
 
 ### Calculating Distances
 
@@ -61,6 +62,10 @@ lonB = -77.023934
 azi =azimuthLineAtoB(latA,lonA,latB,lonB)
 
 ```
+
+## Models
+-----------
+
 
 ### Free Space Model
 
@@ -102,10 +107,10 @@ lonB = -77.023934
 dist = distanceInKm(latA,lonA,latB,lonB)
 
 # Model Setup
-m = OkumuraHataModel()      # For ERP
+m = OkumuraHataModel()      
 m.freq = 800                 # frequency in Mhz
-m.txH = 90                    # Height of the cell site (
-m.rxH = 1.2                   # Height of MS(Mobile Station)
+m.txH = 90                    # Height of the cell site (in meters)
+m.rxH = 1.2                   # Height of Mobile Station (in meters)
 m.areaKind = AreaKind.Urban  # Area Type (Urban SubUrban Open)
 m.cityKind = CityKind.Medium # City type (Small Medium Large)
 
@@ -161,7 +166,7 @@ dist = distanceInKm(latA,lonA,latB,lonB)
 
 # Model Setup
 m = Ecc33Model()     
-m.freq = 800                 # frequency in Mhz
+m.freq = 950                 # frequency in Mhz
 m.txH = 90                   # Height of the cell site (
 m.rxH = 1.2                  # Height of MS(Mobile Station)
 
@@ -231,6 +236,42 @@ m.terrainKind = TerrainKind.B
 
 
 
+pl = pathloss(m,dist)
+
+```
+
+## Models Setup
+-----------
+
+### Frequency Range
+
+It is necessary to set ``checkFreqRange=false``  to used the model outside of the frequency range specified in the model's paper.
+For example, the Okumura-Hata is specified to work in the range 500Mhz - 1500Mhz,
+but, in the example below, the Okumura-Hata is used for ``f = 1800 Mhz``:  
+
+```julia
+
+using PathLoss
+
+# point A
+latA = 38.893
+lonA = -77.037852
+# point B
+latB = 38.899147
+lonB = -77.023934
+
+# Calculating distance
+dist = distanceInKm(latA,lonA,latB,lonB)
+
+# Model Setup
+m = OkumuraHataModel()     
+m.freq = 1800                 # frequency in Mhz
+m.txH = 90                    # Height of the cell site (in meters)
+m.rxH = 1.2                   # Height of Mobile Station (in meters)
+m.areaKind = AreaKind.Urban  # Area Type (Urban SubUrban Open)
+m.cityKind = CityKind.Medium # City type (Small Medium Large)
+m.checkFreqRange=false       # To use in the range outside of 500MHz-1500Mhz
+# Calculating PathLoss
 pl = pathloss(m,dist)
 
 ```

@@ -11,17 +11,18 @@ type EricssonModel<:Model
   txH::Float64
   rxH::Float64
   cityKind::Int
-  EricssonModel() = new(800,50,1.5,CityKind.Medium)
+  checkFreqRange::Bool
+  EricssonModel() = new(800,50,1.5,CityKind.Medium,true)
 end
 @doc "Calculate Path loss for distance dist(km) with the Ericsson Model"
-function pathloss_op(model::EricssonModel,dist::AbstractFloat,checkFreqRange=true)
+function pathloss_op(model::EricssonModel,dist::AbstractFloat)
     # frequency
   f::Float64  = model.freq;
   #Bts and MS Heights
   hm::Float64 = model.rxH
   hb::Float64 = model.txH
    # Checking the frequency range
-   if (checkFreqRange)
+   if (model.checkFreqRange)
      if (f < 100 || f > 2000)
       error("The frequency range for Ericcson Model is 500MHz-1500Mhz")
      end

@@ -6,16 +6,17 @@ type SuiModel<:Model
   rxH::Float64
   terrainKind::Int
   shadowFading ::Float64
-  SuiModel() = new(2500,50,1.5,TerrainKind.A,8.2)
+  checkFreqRange::Bool
+  SuiModel() = new(2500,50,1.5,TerrainKind.A,8.2,true)
 end
 
 
 @doc "Calculate the path loss with the SUI Model"
-function pathloss_op(model::SuiModel,dist::AbstractFloat,checkFreqRange=true)
+function pathloss_op(model::SuiModel,dist::AbstractFloat)
 
   	d::Float64 = dist * 1000	#km to m
     f = model.freq
-    if (checkFreqRange)
+    if (model.checkFreqRange)
       if (f < 1900 || f > 11000)
     		error("The SUI model frequency range is  1.9-11GHz\n");
       end

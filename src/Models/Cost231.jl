@@ -17,11 +17,12 @@ type Cost231Model<:Model
   bs::Float64
   hr::Float64
   cityKind::Int
-  Cost231Model() = new(800,50.0,1.5,20,10,35,CityKind.Medium)
+  checkFreqRange::Bool
+  Cost231Model() = new(800,50.0,1.5,20,10,35,CityKind.Medium,true)
 end
 
 "Calculate Path loss for distance dist (km) with COST 231 Model"
-function pathloss_op(model::Cost231Model, dist::AbstractFloat,checkFreqRange=true)
+function pathloss_op(model::Cost231Model, dist::AbstractFloat)
   #150 a 2000 MHz
   hm::Float64 = model.rxH
   hb::Float64 = model.txH
@@ -31,7 +32,7 @@ function pathloss_op(model::Cost231Model, dist::AbstractFloat,checkFreqRange=tru
   ws::Float64 = model.ws
   bs::Float64 = model.bs
   # Checking the frequency range
-  if (checkFreqRange)
+  if (model.checkFreqRange)
     if (f < 150 || f > 2000)
      error("The frequency range for Ecc-33 Model is 150MHz-2000Mhz")
     end

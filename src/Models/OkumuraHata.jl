@@ -13,15 +13,16 @@ type OkumuraHataModel<:Model
   rxH::Float64
   cityKind::Int
   areaKind::Int
-  OkumuraHataModel() = new(800,50,1.5,CityKind.Medium,AreaKind.Urban)
+  checkFreqRange::Bool
+  OkumuraHataModel() = new(800,50,1.5,CityKind.Medium,AreaKind.Urban,true)
 end
 
 @doc "Calculate the path loss with the Okumura-Hata Model"
-function pathloss_op(model::OkumuraHataModel,dist::AbstractFloat,checkFreqRange=true)
+function pathloss_op(model::OkumuraHataModel,dist::AbstractFloat)
     # frequency
    f::Float64  = model.freq;
    # Checking the frequency range
-   if (checkFreqRange)
+   if (model.checkFreqRange)
      if (f < 500 || f > 1500)
       error("The frequency range for OkumuraHata is 500MHz-1500Mhz")
      end
