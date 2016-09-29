@@ -245,9 +245,9 @@ pl = pathloss(m,dist)
 
 ### Frequency Range
 
-It is necessary to set ``checkFreqRange=false``  to used the model outside of the frequency range specified in the model's paper.
+It is necessary to set ``checkFreqRange=false``  to use the model outside of the frequency range specified in the model's paper.
 For example, the Okumura-Hata is specified to work in the range 500Mhz - 1500Mhz,
-but, in the example below, the Okumura-Hata is used for ``f = 1800 Mhz``:  
+nevertheless, in the example below, the Okumura-Hata is used for ``f = 1800 Mhz``:  
 
 ```julia
 
