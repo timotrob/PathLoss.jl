@@ -290,18 +290,23 @@ m = LeeModel()
 m.freq = 950    #frequency in Mhz
 m.txH = 90      # height of the cell site
 m.rxH = 1.5     # height of MS(Mobile Station
-m.leeArea = LeeArea.NewYorkCity # cyte type.
-# LeeArea are tuples as follow:
-#FreeSpace = 0   # n=2.0 Po=5.0
-#OpenArea = 1    # n=4.35 Po=49.0
-#SubUrban= 2     # n=3.84 Po=61.7
-#Philadelphia=3  # n=3.68 Po=70.0
-#Newark=4        # n=4.31 Po=64.0
-#Tokyo=5         # n=3.05 Po=84.0
-#NewYorkCity =6  # n=4.8 Po=77.0
+m.leeArea = LeeArea.NewYorkCity # (determined empirically)
+# Area parameters are tuples as follow:
+# FreeSpace = (2.0,45.0)
+# OpenArea =  (4.35,49.0)
+# SubUrban= (3.84,61.7)
+# Philadelphia=(3.68, 70.0)
+# Newark=(4.31, 64.0)
+# Tokyo=(3.05, 84.0)
+# NewYorkCity =(4.8,77.0) # n=4.8 Po=77.0
 
 # Calculating PathLoss
 pl = pathloss(m,dist)
+
+
+# it is posssible to change the area parameters as follow:
+m.leeArea = (5.0,81.0)
+pl2 = pathloss(m,dist)
 
 ```
 
