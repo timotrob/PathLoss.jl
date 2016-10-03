@@ -21,10 +21,14 @@ Julia's versions : 0.4 and 0.5.
 
 - Free Space
 - Okumura-Hata
-- COST231
+- COST231 Hata Extension
+- COST231 Waldrosch-Ikegami
 - ECC-33
 - Ericsson 9999
 - SUI (STANFORD UNIVERSITY INTERIM)
+- Lee Model
+- Flat Earth Model
+
 
 ## Geo Functions
 -----------
@@ -107,7 +111,7 @@ lonB = -77.023934
 dist = distanceInKm(latA,lonA,latB,lonB)
 
 # Model Setup
-m = OkumuraHataModel()      
+m = OkumuraHataModel()
 m.freq = 800                 # frequency in Mhz
 m.txH = 90                    # Height of the cell site (in meters)
 m.rxH = 1.2                   # Height of Mobile Station (in meters)
@@ -119,7 +123,7 @@ pl = pathloss(m,dist)
 
 ```
 
-### COST-231
+### COST-231 Hata Extension Model
 
 ```julia
 using PathLoss
@@ -135,7 +139,35 @@ lonB = -77.023934
 dist = distanceInKm(latA,lonA,latB,lonB)
 
 # Model Setup
-m = Cost231Model()    
+m = Cost231HataModel()
+m.freq = 1800    #frequency in Mhz
+m.txH = 90      # height of the cell site (
+m.rxH = 1.5     # height of MS(Mobile Station)
+m.areaKind = AreaKind.Urban # cyte type(Small,Medium or Large).
+
+# Calculating PathLoss
+pl = pathloss(m,dist)
+```
+
+
+
+### COST-231 Waldrosch-Ikegami Model
+
+```julia
+using PathLoss
+
+# point A
+latA = 38.893
+lonA = -77.037852
+# point B
+latB = 38.899147
+lonB = -77.023934
+
+# Calculating distance
+dist = distanceInKm(latA,lonA,latB,lonB)
+
+# Model Setup
+m = Cost231Model()
 m.freq = 800    #frequency in Mhz
 m.txH = 90      # height of the cell site (
 m.rxH = 1.5     # height of MS(Mobile Station)
@@ -165,7 +197,7 @@ lonB = -77.023934
 dist = distanceInKm(latA,lonA,latB,lonB)
 
 # Model Setup
-m = Ecc33Model()     
+m = Ecc33Model()
 m.freq = 950                 # frequency in Mhz
 m.txH = 90                   # Height of the cell site (
 m.rxH = 1.2                  # Height of MS(Mobile Station)
@@ -192,7 +224,7 @@ lonB = -77.023934
 dist = distanceInKm(latA,lonA,latB,lonB)
 
 # Model Setup
-m = EricssonModel()   
+m = EricssonModel()
 m.freq = 800    #frequency in Mhz
 m.txH = 35      # height of the cell site (15 and 40 m.)
 m.rxH = 2       # height of MS(Mobile Station)
@@ -220,7 +252,7 @@ lonB = -77.023934
 dist = distanceInKm(latA,lonA,latB,lonB)
 
 # Model Setup
-m = SuiModel()   
+m = SuiModel()
 m.freq = 2100    #frequency in Mhz
 m.txH = 35      # height of the cell site (15 and 40 m.)
 m.rxH = 2       # height of MS(Mobile Station)
@@ -240,6 +272,65 @@ pl = pathloss(m,dist)
 
 ```
 
+### Lee Model
+
+```julia
+# point A
+latA = 38.893
+lonA = -77.037852
+# point B
+latB = 38.899147
+lonB = -77.023934
+
+# Calculating distance
+dist = distanceInKm(latA,lonA,latB,lonB)
+
+# Model Setup
+m = LeeModel()
+m.freq = 950    #frequency in Mhz
+m.txH = 90      # height of the cell site
+m.rxH = 1.5     # height of MS(Mobile Station
+m.leeArea = LeeArea.NewYorkCity # cyte type.
+# LeeArea are tuples as follow:
+#FreeSpace = 0   # n=2.0 Po=5.0
+#OpenArea = 1    # n=4.35 Po=49.0
+#SubUrban= 2     # n=3.84 Po=61.7
+#Philadelphia=3  # n=3.68 Po=70.0
+#Newark=4        # n=4.31 Po=64.0
+#Tokyo=5         # n=3.05 Po=84.0
+#NewYorkCity =6  # n=4.8 Po=77.0
+
+# Calculating PathLoss
+pl = pathloss(m,dist)
+
+```
+
+
+### Flat Earth Model
+
+```julia
+# point A
+latA = 38.893
+lonA = -77.037852
+# point B
+latB = 38.899147
+lonB = -77.023934
+
+# Calculating distance
+dist = distanceInKm(latA,lonA,latB,lonB)
+
+# Model Setup
+m = FlatEarthModel()
+m.freq = 950    #frequency in Mhz
+m.txH = 90      # height of the cell site
+m.rxH = 1.5     # height of MS(Mobile Station
+
+# Calculating PathLoss
+pl = pathloss(m,dist)
+
+```
+
+
 ## Models Setup
 -----------
 
@@ -247,7 +338,7 @@ pl = pathloss(m,dist)
 
 It is necessary to set ``checkFreqRange=false``  to use the model outside of the frequency range specified in the model's paper.
 For example, the Okumura-Hata is specified to work in the range 500Mhz - 1500Mhz,
-nevertheless, in the example below, the Okumura-Hata is used for ``f = 1800 Mhz``:  
+nevertheless, in the example below, the Okumura-Hata is used for ``f = 1800 Mhz``:
 
 ```julia
 
@@ -264,7 +355,7 @@ lonB = -77.023934
 dist = distanceInKm(latA,lonA,latB,lonB)
 
 # Model Setup
-m = OkumuraHataModel()     
+m = OkumuraHataModel()
 m.freq = 1800                 # frequency in Mhz
 m.txH = 90                    # Height of the cell site (in meters)
 m.rxH = 1.2                   # Height of Mobile Station (in meters)
