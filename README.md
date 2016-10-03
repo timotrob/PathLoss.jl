@@ -107,7 +107,7 @@ lonB = -77.023934
 dist = distanceInKm(latA,lonA,latB,lonB)
 
 # Model Setup
-m = OkumuraHataModel()      
+m = OkumuraHataModel()
 m.freq = 800                 # frequency in Mhz
 m.txH = 90                    # Height of the cell site (in meters)
 m.rxH = 1.2                   # Height of Mobile Station (in meters)
@@ -119,7 +119,7 @@ pl = pathloss(m,dist)
 
 ```
 
-### COST-231
+### COST-231 Hata Extension Model
 
 ```julia
 using PathLoss
@@ -135,7 +135,35 @@ lonB = -77.023934
 dist = distanceInKm(latA,lonA,latB,lonB)
 
 # Model Setup
-m = Cost231Model()    
+m = Cost231HataModel()
+m.freq = 800    #frequency in Mhz
+m.txH = 90      # height of the cell site (
+m.rxH = 1.5     # height of MS(Mobile Station)
+m.areaKind = AreaKind.Urban  # Area Type (Urban SubUrban Open)
+
+# Calculating PathLoss
+pl = pathloss(m,dist)
+```
+
+
+
+### COST-231 Waldrosch-Ikegami Model
+
+```julia
+using PathLoss
+
+# point A
+latA = 38.893
+lonA = -77.037852
+# point B
+latB = 38.899147
+lonB = -77.023934
+
+# Calculating distance
+dist = distanceInKm(latA,lonA,latB,lonB)
+
+# Model Setup
+m = Cost231Model()
 m.freq = 800    #frequency in Mhz
 m.txH = 90      # height of the cell site (
 m.rxH = 1.5     # height of MS(Mobile Station)
@@ -165,7 +193,7 @@ lonB = -77.023934
 dist = distanceInKm(latA,lonA,latB,lonB)
 
 # Model Setup
-m = Ecc33Model()     
+m = Ecc33Model()
 m.freq = 950                 # frequency in Mhz
 m.txH = 90                   # Height of the cell site (
 m.rxH = 1.2                  # Height of MS(Mobile Station)
@@ -192,7 +220,7 @@ lonB = -77.023934
 dist = distanceInKm(latA,lonA,latB,lonB)
 
 # Model Setup
-m = EricssonModel()   
+m = EricssonModel()
 m.freq = 800    #frequency in Mhz
 m.txH = 35      # height of the cell site (15 and 40 m.)
 m.rxH = 2       # height of MS(Mobile Station)
@@ -220,7 +248,7 @@ lonB = -77.023934
 dist = distanceInKm(latA,lonA,latB,lonB)
 
 # Model Setup
-m = SuiModel()   
+m = SuiModel()
 m.freq = 2100    #frequency in Mhz
 m.txH = 35      # height of the cell site (15 and 40 m.)
 m.rxH = 2       # height of MS(Mobile Station)
@@ -247,7 +275,7 @@ pl = pathloss(m,dist)
 
 It is necessary to set ``checkFreqRange=false``  to use the model outside of the frequency range specified in the model's paper.
 For example, the Okumura-Hata is specified to work in the range 500Mhz - 1500Mhz,
-nevertheless, in the example below, the Okumura-Hata is used for ``f = 1800 Mhz``:  
+nevertheless, in the example below, the Okumura-Hata is used for ``f = 1800 Mhz``:
 
 ```julia
 
@@ -264,7 +292,7 @@ lonB = -77.023934
 dist = distanceInKm(latA,lonA,latB,lonB)
 
 # Model Setup
-m = OkumuraHataModel()     
+m = OkumuraHataModel()
 m.freq = 1800                 # frequency in Mhz
 m.txH = 90                    # Height of the cell site (in meters)
 m.rxH = 1.2                   # Height of Mobile Station (in meters)
