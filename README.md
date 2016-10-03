@@ -21,10 +21,14 @@ Julia's versions : 0.4 and 0.5.
 
 - Free Space
 - Okumura-Hata
-- COST231
+- COST231 Hata Extension
+- COST231 Waldrosch-Ikegami
 - ECC-33
 - Ericsson 9999
 - SUI (STANFORD UNIVERSITY INTERIM)
+- Lee Model
+- Flat Earth Model
+
 
 ## Geo Functions
 -----------
@@ -136,10 +140,10 @@ dist = distanceInKm(latA,lonA,latB,lonB)
 
 # Model Setup
 m = Cost231HataModel()
-m.freq = 800    #frequency in Mhz
+m.freq = 1800    #frequency in Mhz
 m.txH = 90      # height of the cell site (
 m.rxH = 1.5     # height of MS(Mobile Station)
-m.areaKind = AreaKind.Urban  # Area Type (Urban SubUrban Open)
+m.areaKind = AreaKind.Urban # cyte type(Small,Medium or Large).
 
 # Calculating PathLoss
 pl = pathloss(m,dist)
@@ -267,6 +271,65 @@ m.terrainKind = TerrainKind.B
 pl = pathloss(m,dist)
 
 ```
+
+### Lee Model
+
+```julia
+# point A
+latA = 38.893
+lonA = -77.037852
+# point B
+latB = 38.899147
+lonB = -77.023934
+
+# Calculating distance
+dist = distanceInKm(latA,lonA,latB,lonB)
+
+# Model Setup
+m = LeeModel()
+m.freq = 950    #frequency in Mhz
+m.txH = 90      # height of the cell site
+m.rxH = 1.5     # height of MS(Mobile Station
+m.leeArea = LeeArea.NewYorkCity # cyte type.
+# LeeArea are tuples as follow:
+#FreeSpace = 0   # n=2.0 Po=5.0
+#OpenArea = 1    # n=4.35 Po=49.0
+#SubUrban= 2     # n=3.84 Po=61.7
+#Philadelphia=3  # n=3.68 Po=70.0
+#Newark=4        # n=4.31 Po=64.0
+#Tokyo=5         # n=3.05 Po=84.0
+#NewYorkCity =6  # n=4.8 Po=77.0
+
+# Calculating PathLoss
+pl = pathloss(m,dist)
+
+```
+
+
+### Flat Earth Model
+
+```julia
+# point A
+latA = 38.893
+lonA = -77.037852
+# point B
+latB = 38.899147
+lonB = -77.023934
+
+# Calculating distance
+dist = distanceInKm(latA,lonA,latB,lonB)
+
+# Model Setup
+m = FlatEarthModel()
+m.freq = 950    #frequency in Mhz
+m.txH = 90      # height of the cell site
+m.rxH = 1.5     # height of MS(Mobile Station
+
+# Calculating PathLoss
+pl = pathloss(m,dist)
+
+```
+
 
 ## Models Setup
 -----------

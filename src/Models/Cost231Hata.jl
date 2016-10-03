@@ -27,7 +27,7 @@ function pathloss_op(model::Cost231HataModel, dist::AbstractFloat)
   # Checking the frequency range
   if (model.checkFreqRange)
     if (f < 1500 || f > 2000)
-     error("The frequency range for Ecc-33 Hata Extension Model is 1500MHz-2000Mhz")
+     error("The frequency range for COST213 Hata Extension Model is 1500MHz-2000Mhz")
     end
   end
   #Pathloss
